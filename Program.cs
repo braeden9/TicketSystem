@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace ticketSystem
 {
@@ -6,8 +7,10 @@ namespace ticketSystem
     {
         static void Main(string[] args)
         {
+            string file = "tickets.csv";
             Int64 nextTicketID = 1;
             string resp = "";
+            
             do {
                 Console.WriteLine("1. Create ticket");
                 Console.WriteLine("2. Display tickets");
@@ -35,6 +38,10 @@ namespace ticketSystem
 
                     Console.WriteLine("Who is watching this? (Seperate with comma)");
                     string watching = Console.ReadLine().Replace(',','|');
+
+                    StreamWriter sw = new StreamWriter(file);
+                    sw.WriteLine($"{ticketID},{summary},{status},{priority},{submitter},{assigned},{watching}");
+                    sw.Close();
                 }
 
             } while (resp == "1" || resp == "2");
