@@ -6,7 +6,12 @@ namespace ticketSystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string resp = "";
+            do {
+                Console.WriteLine("1. Create ticket");
+                Console.WriteLine("2. Display tickets");
+                resp = Console.ReadLine();
+            } while(resp == "1" || resp == "2");
         }
     }
 }
