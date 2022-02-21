@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace ticketSystem
 {
@@ -8,7 +9,17 @@ namespace ticketSystem
         static void Main(string[] args)
         {
             string file = "tickets.csv";
-            Int64 nextTicketID = 1;
+
+            StreamReader sr = new StreamReader(file);
+            Int64 nextTicketID = 0;
+            while (!sr.EndOfStream) {
+                Int64 Id = Int64.Parse(sr.ReadLine().Split(",")[0]);
+                if (Id > nextTicketID) {
+                    nextTicketID = Id + 1;
+                }
+            }
+            sr.Close();
+            
             string resp = "";
             
             do {
@@ -39,10 +50,15 @@ namespace ticketSystem
                     Console.WriteLine("Who is watching this? (Seperate with comma)");
                     string watching = Console.ReadLine().Replace(',','|');
 
-                    StreamWriter sw = new StreamWriter(file);
-                    sw.WriteLine($"{ticketID},{summary},{status},{priority},{submitter},{assigned},{watching}");
-                    sw.Close();
-                }
+                    using (FileStream fs = new FileStream(file,FileMode.Append, FileAccess.Write)) {
+                        using (StreamWriter sw = new StreamWriter(fs)) {
+                            sw.WriteLine($"{ticketID},{summary},{status},{priority},{submitter},{assigned},{watching}");
+                            sw.Close();
+                        }
+                        fs.Close();
+                    }
+                    nextTicketID += 1;
+                } 
 
             } while (resp == "1" || resp == "2");
         }
