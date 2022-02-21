@@ -58,7 +58,16 @@ namespace ticketSystem
                         fs.Close();
                     }
                     nextTicketID += 1;
-                } 
+                } else if (resp == "2") {
+                    StreamReader sr2 = new StreamReader(file);
+                    Console.WriteLine("Id, Summary, Status, Priority, Writter, Assigned, Watching");
+                    while (!sr2.EndOfStream) {
+                        string line = sr2.ReadLine();
+                        Console.WriteLine(line.Replace(",",", ").Replace("|"," & "));
+                    }
+                    sr2.Close();
+                    Console.WriteLine("");
+                }
 
             } while (resp == "1" || resp == "2");
         }
