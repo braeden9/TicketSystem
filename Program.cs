@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 
 namespace TicketSysClasses
 {
@@ -10,7 +9,7 @@ namespace TicketSysClasses
         {
             string ticketFilePath = Directory.GetCurrentDirectory() + "\\tickets.csv";
             TicketFile ticketFile = new TicketFile(ticketFilePath);
-            
+
             string resp = "";
             
             do {
@@ -24,7 +23,7 @@ namespace TicketSysClasses
                 if (resp == "1") {
                     Ticket ticket = new Ticket();
 
-                    ticket.ticketID = 1;
+                    ticket.ticketID = ticketFile.NextTicketID;
                     Console.WriteLine("Who are you?");
                     ticket.submitter = Console.ReadLine();
 
@@ -54,6 +53,7 @@ namespace TicketSysClasses
 
                     ticketFile.AddTicket(ticket);
                 } else if (resp == "2") {
+                    Console.Clear();
                     foreach(Ticket t in ticketFile.Tickets) {
                         Console.WriteLine(t.Display());
                     }

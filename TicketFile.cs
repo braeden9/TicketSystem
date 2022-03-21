@@ -7,6 +7,7 @@ namespace TicketSysClasses
     class TicketFile
     {
         public string filePath { get; set; }
+        public Int64 NextTicketID { get; set; } 
         public List<Ticket> Tickets { get; set; }
 
         public TicketFile(string ticketFilePath) {
@@ -15,6 +16,7 @@ namespace TicketSysClasses
 
             try {
                 StreamReader sr = new StreamReader(filePath);
+                NextTicketID = 0;
                 while (!sr.EndOfStream)
                 {
                     Ticket ticket = new Ticket();
@@ -29,6 +31,9 @@ namespace TicketSysClasses
                         ticket.watching.Add(person);
                     }
                     Tickets.Add(ticket);
+                    if (NextTicketID <= ticket.ticketID) {
+                        NextTicketID = ticket.ticketID + 1;
+                    }
                 } 
                 sr.Close();
             } catch (Exception ex) {
@@ -42,6 +47,7 @@ namespace TicketSysClasses
                 sw.WriteLine($"{ticket.ticketID},{ticket.submitter},{ticket.summary},{ticket.status},{ticket.priority},{ticket.assigned},{string.Join("|",ticket.watching)}");
                 sw.Close();
                 Tickets.Add(ticket);
+                NextTicketID = NextTicketID + 1;
             } catch (Exception ex) {
                 Console.WriteLine(ex);
             }
