@@ -16,7 +16,8 @@ namespace TicketSysClasses
             watching = new List<string>();
         }
         public virtual string Display() {
-            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\n"
+                + $"Watching: {string.Join(", ", watching)}\n";
         }
     }
 
@@ -43,8 +44,8 @@ namespace TicketSysClasses
 
     public class Task : Ticket
     {
-        public string ProjectName { get; set; }
-        public DateTime DueDate { get; set; }
+        public string projectName { get; set; }
+        public DateTime dueDate { get; set; }
         public override string Display() {
             return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\n"
             + $"Watching: {string.Join(", ", watching)}\n";
