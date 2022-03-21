@@ -44,7 +44,7 @@ namespace TicketSysClasses
                         Console.WriteLine("Who is watching this? (Enter when done)");
                         watchInput = Console.ReadLine();
                         if (watchInput != "") {                        
-                            ticket.watching.Add(Console.ReadLine());
+                            ticket.watching.Add(watchInput);
                         }                    
                     } while (watchInput != "");
 
@@ -52,6 +52,7 @@ namespace TicketSysClasses
                         ticket.watching.Add("none");
                     }
 
+                    ticketFile.AddTicket(ticket);
                 } else if (resp == "2") {
                     foreach(Ticket t in ticketFile.Tickets) {
                         Console.WriteLine(t.Display());

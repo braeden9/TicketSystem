@@ -19,7 +19,7 @@ namespace TicketSysClasses
                 {
                     Ticket ticket = new Ticket();
                     string[] segments = sr.ReadLine().Split(",");
-                    ticket.ticketID = Int16.Parse(segments[0]);
+                    ticket.ticketID = Int64.Parse(segments[0]);
                     ticket.submitter = segments[1];
                     ticket.summary = segments[2];
                     ticket.status = segments[3];
@@ -39,7 +39,7 @@ namespace TicketSysClasses
         public void AddTicket(Ticket ticket) {
             try { 
                 StreamWriter sw = new StreamWriter(filePath, true);
-                sw.WriteLine($"{ticket.ticketID},{ticket.submitter},{ticket.summary},{ticket.priority},{ticket.assigned},{string.Join("|",ticket.watching)}");
+                sw.WriteLine($"{ticket.ticketID},{ticket.submitter},{ticket.summary},{ticket.status},{ticket.priority},{ticket.assigned},{string.Join("|",ticket.watching)}");
                 sw.Close();
                 Tickets.Add(ticket);
             } catch (Exception ex) {
