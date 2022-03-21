@@ -8,7 +8,8 @@ namespace TicketSysClasses
     {
         static void Main(string[] args)
         {
-            string file = "tickets.csv";
+            string ticketFilePath = Directory.GetCurrentDirectory() + "\\tickets.csv";
+            TicketFile ticketFile = new TicketFile(ticketFilePath);
             
             string resp = "";
             
@@ -52,14 +53,9 @@ namespace TicketSysClasses
                     }
 
                 } else if (resp == "2") {
-                    StreamReader sr2 = new StreamReader(file);
-                    Console.WriteLine("Id, Summary, Status, Priority, Writter, Assigned, Watching");
-                    while (!sr2.EndOfStream) {
-                        string line = sr2.ReadLine();
-                        Console.WriteLine(line.Replace(",",", ").Replace("|"," & "));
+                    foreach(Ticket t in ticketFile.Tickets) {
+                        Console.WriteLine(t.Display());
                     }
-                    sr2.Close();
-                    Console.WriteLine("");
                 }
 
             } while (resp == "1" || resp == "2");
