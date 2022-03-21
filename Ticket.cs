@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TicketSysClasses
 {
-    public class Ticket
+    public abstract class Ticket
     {
         public Int64 ticketID { get; set; }
         public string submitter { get; set; }
@@ -15,8 +15,39 @@ namespace TicketSysClasses
         public Ticket() {
             watching = new List<string>();
         }
-        public string Display() {
+        public virtual string Display() {
             return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+        }
+    }
+
+    public class Bug : Ticket
+    {
+        public int severity { get; set; }
+        public override string Display() {
+            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\n"
+                + $"Prioity: {priority}\nAssigned: {assigned}\nWatching: {string.Join(", ", watching)}\nSeverity: {severity}";
+        }
+    } 
+
+    public class Enchancement : Ticket
+    {
+        public string software { get; set; }
+        public Int16 cost { get; set; }
+        public string reason { get; set; }
+        public Int16 estimate { get; set; }
+        public override string Display() {
+            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\n"
+            + $"Watching: {string.Join(", ", watching)}\nSoftware: {software}\nCost: {cost}\nReason: {reason}\nEstimate: {estimate}";
+        }
+    }
+
+    public class Task : Ticket
+    {
+        public string ProjectName { get; set; }
+        public DateTime DueDate { get; set; }
+        public override string Display() {
+            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\n"
+            + $"Watching: {string.Join(", ", watching)}\n";
         }
     }
 }

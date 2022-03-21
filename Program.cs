@@ -21,37 +21,43 @@ namespace TicketSysClasses
                 Console.Clear();
 
                 if (resp == "1") {
-                    Ticket ticket = new Ticket();
+                    Console.WriteLine("What type would you like to make? (1-Bug/Defect 2-Enchancement 3-Task)");
+                    resp = Console.ReadLine();
+                    if (resp != "1" && resp != "2" && resp != "3") {
+                        Ticket ticket = new Bug();
 
-                    ticket.ticketID = ticketFile.NextTicketID;
-                    Console.WriteLine("Who are you?");
-                    ticket.submitter = Console.ReadLine();
+                        ticket.ticketID = ticketFile.NextTicketID;
+                        Console.WriteLine("Who are you?");
+                        ticket.submitter = Console.ReadLine();
 
-                    Console.WriteLine("Please explain your issue.");
-                    ticket.summary = Console.ReadLine();
+                        Console.WriteLine("Please explain your issue.");
+                        ticket.summary = Console.ReadLine();
 
-                    ticket.status = "Open";
+                        ticket.status = "Open";
 
-                    Console.WriteLine("How big is this issue? (1-Low, 2-Med, 3-High)");
-                    ticket.priority = Int16.Parse(Console.ReadLine());
-                    
-                    Console.WriteLine("Who is assigned to this?");
-                    ticket.assigned = Console.ReadLine();
+                        Console.WriteLine("What is the priority? (1-Low, 2-Med, 3-High)");
+                        ticket.priority = Int16.Parse(Console.ReadLine());
+                        
+                        Console.WriteLine("Who is assigned to this?");
+                        ticket.assigned = Console.ReadLine();
 
-                    string watchInput;
-                    do {
-                        Console.WriteLine("Who is watching this? (Enter when done)");
-                        watchInput = Console.ReadLine();
-                        if (watchInput != "") {                        
-                            ticket.watching.Add(watchInput);
-                        }                    
-                    } while (watchInput != "");
+                        string watchInput;
+                        do {
+                            Console.WriteLine("Who is watching this? (Enter when done)");
+                            watchInput = Console.ReadLine();
+                            if (watchInput != "") {                        
+                                ticket.watching.Add(watchInput);
+                            }                    
+                        } while (watchInput != "");
 
-                    if (ticket.watching.Count == 0) {
-                        ticket.watching.Add("none");
+                        if (ticket.watching.Count == 0) {
+                            ticket.watching.Add("none");
+                        }
+
+                        ticketFile.AddTicket(ticket);
+                    } else {
+                        Console.WriteLine("That type does not exists");
                     }
-
-                    ticketFile.AddTicket(ticket);
                 } else if (resp == "2") {
                     Console.Clear();
                     foreach(Ticket t in ticketFile.Tickets) {
