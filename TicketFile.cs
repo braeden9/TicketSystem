@@ -19,12 +19,13 @@ namespace TicketSysClasses
                 {
                     Ticket ticket = new Ticket();
                     string[] segments = sr.ReadLine().Split(",");
-                    ticket.ticketID = Convert.ToInt64(segments[0]);
+                    ticket.ticketID = Int16.Parse(segments[0]);
                     ticket.submitter = segments[1];
                     ticket.summary = segments[2];
-                    ticket.priority = Convert.ToInt16(segments[3]);
-                    ticket.assigned = segments[4];
-                    foreach (string person in segments[5].Split("|")){
+                    ticket.status = segments[3];
+                    ticket.priority = Int16.Parse(segments[4]);
+                    ticket.assigned = segments[5];
+                    foreach (string person in segments[6].Split("|")){
                         ticket.watching.Add(person);
                     }
                     Tickets.Add(ticket);

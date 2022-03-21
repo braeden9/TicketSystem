@@ -9,15 +9,14 @@ namespace TicketSysClasses
         public string submitter { get; set; }
         public string summary { get; set; }
         public string status { get; set; }
-        public string priority { get; set; }
+        public int priority { get; set; }
         public string assigned { get; set; }
         public List<string> watching { get; set; }
         public Ticket() {
             watching = new List<string>();
         }
-        public string Display()
-        {
-            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nPrioity: {priority}\nAssigned: {assigned}\nWatching: {string.Join(", ", watching)}\n";
+        public string Display() {
+            return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\nWatching: {string.Join(", ", watching)}\n";
         }
     }
 }
