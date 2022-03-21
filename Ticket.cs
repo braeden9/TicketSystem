@@ -48,7 +48,7 @@ namespace TicketSysClasses
         public DateTime dueDate { get; set; }
         public override string Display() {
             return $"Id: {ticketID}\nSubmitter: {submitter}\nSummary: {summary}\nStatus: {status}\nPrioity: {priority}\nAssigned: {assigned}\n"
-            + $"Watching: {string.Join(", ", watching)}\n";
+            + $"Watching: {string.Join(", ", watching)}\nProject Name: {projectName}\nDue Date: {dueDate}";
         }
     }
 }

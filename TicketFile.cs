@@ -40,11 +40,10 @@ namespace TicketSysClasses
                 } 
                 sr.Close();
                 StreamReader sr2 = new StreamReader(filePath + "\\enchancements.csv");
-                NextTicketID = 0;
                 while (!sr2.EndOfStream)
                 {
                     Enchancement ticket = new Enchancement();
-                    string[] segments = sr.ReadLine().Split(",");
+                    string[] segments = sr2.ReadLine().Split(",");
                     ticket.ticketID = Int64.Parse(segments[0]);
                      if (NextTicketID <= ticket.ticketID) { NextTicketID = ticket.ticketID + 1; }
                     ticket.submitter = segments[1];
@@ -61,13 +60,12 @@ namespace TicketSysClasses
                     ticket.estimate = Int16.Parse(segments[10]);
                     Enchancements.Add(ticket);
                 } 
-                sr.Close();
+                sr2.Close();
                 StreamReader sr3 = new StreamReader(filePath + "\\tasks.csv");
-                NextTicketID = 0;
                 while (!sr3.EndOfStream)
                 {
                     Task ticket = new Task();
-                    string[] segments = sr.ReadLine().Split(",");
+                    string[] segments = sr3.ReadLine().Split(",");
                     ticket.ticketID = Int64.Parse(segments[0]);
                      if (NextTicketID <= ticket.ticketID) { NextTicketID = ticket.ticketID + 1; }
                     ticket.submitter = segments[1];
@@ -82,7 +80,7 @@ namespace TicketSysClasses
                     ticket.dueDate = DateTime.Parse(segments[8]);
                     Tasks.Add(ticket);
                 } 
-                sr.Close();
+                sr3.Close();
             } catch (Exception ex) {
                 Console.WriteLine(ex);
             }
