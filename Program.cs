@@ -7,7 +7,7 @@ namespace TicketSysClasses
     {
         static void Main(string[] args)
         {
-            string ticketFilePath = Directory.GetCurrentDirectory() + "\\tickets.csv";
+            string ticketFilePath = Directory.GetCurrentDirectory();
             TicketFile ticketFile = new TicketFile(ticketFilePath);
 
             string resp = "";
@@ -23,44 +23,141 @@ namespace TicketSysClasses
                 if (resp == "1") {
                     Console.WriteLine("What type would you like to make? (1-Bug/Defect 2-Enchancement 3-Task)");
                     resp = Console.ReadLine();
-                    if (resp != "1" && resp != "2" && resp != "3") {
-                        Ticket ticket = new Bug();
+                    switch (resp)
+                    {
+                        case "1": 
+                            Bug bug = new Bug();
 
-                        ticket.ticketID = ticketFile.NextTicketID;
-                        Console.WriteLine("Who are you?");
-                        ticket.submitter = Console.ReadLine();
+                            bug.ticketID = ticketFile.NextTicketID;
+                            Console.WriteLine("Who are you?");
+                            bug.submitter = Console.ReadLine();
 
-                        Console.WriteLine("Please explain your issue.");
-                        ticket.summary = Console.ReadLine();
+                            Console.WriteLine("Please explain your issue.");
+                            bug.summary = Console.ReadLine();
 
-                        ticket.status = "Open";
+                            bug.status = "Open";
 
-                        Console.WriteLine("What is the priority? (1-Low, 2-Med, 3-High)");
-                        ticket.priority = Int16.Parse(Console.ReadLine());
-                        
-                        Console.WriteLine("Who is assigned to this?");
-                        ticket.assigned = Console.ReadLine();
+                            Console.WriteLine("What is the priority? (1-Low, 2-Med, 3-High)");
+                            bug.priority = Int16.Parse(Console.ReadLine());
+                            
+                            Console.WriteLine("Who is assigned to this?");
+                            bug.assigned = Console.ReadLine();
 
-                        string watchInput;
-                        do {
-                            Console.WriteLine("Who is watching this? (Enter when done)");
-                            watchInput = Console.ReadLine();
-                            if (watchInput != "") {                        
-                                ticket.watching.Add(watchInput);
-                            }                    
-                        } while (watchInput != "");
+                            string watchInput;
+                            do {
+                                Console.WriteLine("Who is watching this? (Enter when done)");
+                                watchInput = Console.ReadLine();
+                                if (watchInput != "") {                        
+                                    bug.watching.Add(watchInput);
+                                }                    
+                            } while (watchInput != "");
 
-                        if (ticket.watching.Count == 0) {
-                            ticket.watching.Add("none");
-                        }
+                            if (bug.watching.Count == 0) {
+                                bug.watching.Add("none");
+                            }
 
-                        ticketFile.AddTicket(ticket);
-                    } else {
-                        Console.WriteLine("That type does not exists");
+                            Console.WriteLine("What is the severity? (1-Low, 2-Med, 3-High)");
+                            bug.severity = Int16.Parse(Console.ReadLine());
+
+                            ticketFile.AddBug(bug);
+                            break;
+                        case "2":
+                            Enchancement enchancement = new Enchancement();
+
+                            enchancement.ticketID = ticketFile.NextTicketID;
+                            Console.WriteLine("Who are you?");
+                            enchancement.submitter = Console.ReadLine();
+
+                            Console.WriteLine("Please explain your issue.");
+                            enchancement.summary = Console.ReadLine();
+
+                            enchancement.status = "Open";
+
+                            Console.WriteLine("What is the priority? (1-Low, 2-Med, 3-High)");
+                            enchancement.priority = Int16.Parse(Console.ReadLine());
+                            
+                            Console.WriteLine("Who is assigned to this?");
+                            enchancement.assigned = Console.ReadLine();
+
+                            do {
+                                Console.WriteLine("Who is watching this? (Enter when done)");
+                                watchInput = Console.ReadLine();
+                                if (watchInput != "") {                        
+                                    enchancement.watching.Add(watchInput);
+                                }                    
+                            } while (watchInput != "");
+
+                            if (enchancement.watching.Count == 0) {
+                                enchancement.watching.Add("none");
+                            }
+
+                            Console.WriteLine("What is the software?");
+                            enchancement.software = Console.ReadLine();
+                            
+                            Console.WriteLine("What is the cost?");
+                            enchancement.cost = Int16.Parse(Console.ReadLine());
+
+                            Console.WriteLine("What is the reason to this?");
+                            enchancement.reason = Console.ReadLine();
+
+                            Console.WriteLine("What is the estimate?");
+                            enchancement.estimate = Int16.Parse(Console.ReadLine());
+
+                            ticketFile.AddEnchancement(enchancement);
+                            break;
+                        case "3":
+                            Task task = new Task();
+
+                            task.ticketID = ticketFile.NextTicketID;
+                            Console.WriteLine("Who are you?");
+                            task.submitter = Console.ReadLine();
+
+                            Console.WriteLine("Please explain your issue.");
+                            task.summary = Console.ReadLine();
+
+                            task.status = "Open";
+
+                            Console.WriteLine("What is the priority? (1-Low, 2-Med, 3-High)");
+                            task.priority = Int16.Parse(Console.ReadLine());
+                            
+                            Console.WriteLine("Who is assigned to this?");
+                            task.assigned = Console.ReadLine();
+
+                            do {
+                                Console.WriteLine("Who is watching this? (Enter when done)");
+                                watchInput = Console.ReadLine();
+                                if (watchInput != "") {                        
+                                    task.watching.Add(watchInput);
+                                }                    
+                            } while (watchInput != "");
+
+                            if (task.watching.Count == 0) {
+                                task.watching.Add("none");
+                            }
+
+                            Console.WriteLine("What is the name/title");
+                            task.projectName = Console.ReadLine();
+
+                            Console.WriteLine("What is the due date? (MM/DD/YYYY HH:MM AM/PM)");
+                            task.dueDate = DateTime.Parse(Console.ReadLine());
+
+                            ticketFile.AddTask(task);
+                            resp = "1";
+                            break;
+                        default:
+                            Console.WriteLine("That type does not exists. Please try again.");
+                            resp = "1";
+                            break;
                     }
                 } else if (resp == "2") {
                     Console.Clear();
-                    foreach(Ticket t in ticketFile.Tickets) {
+                    foreach(Bug b in ticketFile.Bugs) {
+                        Console.WriteLine(b.Display());
+                    }
+                    foreach(Enchancement e in ticketFile.Enchancements) {
+                        Console.WriteLine(e.Display());
+                    }
+                    foreach(Task t in ticketFile.Tasks) {
                         Console.WriteLine(t.Display());
                     }
                 }
